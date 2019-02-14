@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/oak-bike-client/precache-manifest.fe8420663c506fdc29c208c6440dcb1a.js"
+  "/oak-bike-client/precache-manifest.a806e29d2c8b3db4f337733dcd8a40b4.js"
 );
 
 workbox.clientsClaim();
