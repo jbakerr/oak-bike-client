@@ -25,8 +25,8 @@ const ReportDetailsUI = (props) => {
   const {
     image,
     coords,
-    details,
-    setDetail,
+    // details,
+    // setDetail,
   } = props;
 
   return (

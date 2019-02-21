@@ -13,11 +13,11 @@ const mapDispatchToProps = (dispatch) => ({
 const MapComponentUI = (props) => {
   const [center, setCenter] = useState(coordsOakland);
   const [mapRef, setMapRef] = useState();
-  const move = () => setCenter(mapRef.getCenter().toJSON())
+  const move = () => setCenter(mapRef.getCenter().toJSON());
   const next = () => {
     props.setCoords(center);
     props.setStatus(DETAILS);
-  }
+  };
   return (
     <>
       <GoogleMap
@@ -38,7 +38,7 @@ const MapComponent = connect(null, mapDispatchToProps)(MapComponentUI);
 const WrappedMapComponent = withScriptjs(withGoogleMap((props) => <MapComponent/>));
 
 const Map = () => <WrappedMapComponent
-  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyBQ4qDuM3ETjBY4Oa_H8sr8lGdir6nttfs"
+  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAzDhdx-kNuTA5c8jSobJxl8wv0N9KEcfo"
   loadingElement={<div style={{ height: `100%` }} />}
   containerElement={<div style={{ height: `400px` }} />}
   mapElement={<div style={{ height: `100%` }} />}

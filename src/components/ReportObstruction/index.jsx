@@ -1,33 +1,61 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useState } from "react";
 
 import {
-  IMAGE,
+  UPLOAD,
   LOCATION,
   DETAILS,
-} from "../../constants/report"
+  SUBMISSION,
+  COMPLETE,
+  coordsOakland,
+  // initDetails,
+} from "../../constants/report";
 
-import { selectReportStatus } from "../../redux/report/selectors";
+import Upload from "./Upload";
+import Location from "./Location";
+import Details from "./Details";
 
-import ReportImage from "./image";
-import ReportLocation from "./location";
-import ReportDetails from "./details"
+const ReportObstruction = () => {
+  const [status, setStatus] = useState(UPLOAD);
+  const [upload, setUpload] = useState({});
+  const [location, setLocation] = useState(coordsOakland);
+  // const [details, setDetails] = useState(initDetails);
+  // const updateDetail = ([key, val]) => setDetails({ ...details, [key]: val });
 
-const mapStateToProps = (state) => ({
-  status: selectReportStatus(state),
-});
+  // const handleSubmit = () => {
+  //   console.log("submit!")
+  // }
 
-const ReportObstructionUI = (props) => {
-  const { status } = props;
-
-  switch (status) {
-    case IMAGE: return <ReportImage/>;
-    case LOCATION: return <ReportLocation/>;
-    case DETAILS: return <ReportDetails/>;
-    default: return <p>wat</p>;
+  switch(status) {
+    case UPLOAD:
+      return (
+        <Upload
+          setStatus={setStatus}
+          setUpload={setUpload}
+        />
+      );
+    case LOCATION:
+      return (
+        <Location
+          initCenter={coordsOakland}
+          initZoom={14}
+          setLocation={setLocation}
+          setStatus={setStatus}
+        />
+      );
+    case DETAILS:
+      return (
+        <Details
+          upload={upload}
+          location={location}
+        />
+      );
+    case SUBMISSION:
+      return (<p>...</p>);
+    case COMPLETE:
+      return (<p>...</p>);
+    default:
+      return null;    
   }
 };
-
-const ReportObstruction = connect(mapStateToProps, null)(ReportObstructionUI);
 
 export default ReportObstruction;

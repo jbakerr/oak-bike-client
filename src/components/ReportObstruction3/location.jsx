@@ -8,6 +8,7 @@ import { selectReportLocationMethod, } from "../../redux/report/selectors";
 import { setReportLocationMethod, getReportLocationCoords, } from "../../redux/report/actions";
 
 import Map from "./map";
+import Address from "./address";
 
 const mapStateToProps = (state) => ({
   method: selectReportLocationMethod(state),
@@ -42,7 +43,7 @@ const ReportLocationUI = (props) => {
   switch(method) {
     case USE_MY_LOCATION: return <p>fetching location...</p>;
     case DROP_PIN_ON_MAP: return <Map/>;
-    case ENTER_ADDRESS: return <p>enter address...</p>;
+    case ENTER_ADDRESS: return <Address/>;
     default: return (
       <div>
         <button onClick={useMyLocation}>Use My Location</button>
