@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "20c5d953ac6ee8290656",
+    "revision": "27f6884ffb699170e10a",
     "url": "/oak-bike-client/static/css/main.aec86303.chunk.css"
   },
   {
-    "revision": "20c5d953ac6ee8290656",
-    "url": "/oak-bike-client/static/js/main.20c5d953.chunk.js"
+    "revision": "27f6884ffb699170e10a",
+    "url": "/oak-bike-client/static/js/main.27f6884f.chunk.js"
   },
   {
     "revision": "1d1c4b8dc840b200bd90",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/oak-bike-client/static/js/2.6240e207.chunk.js"
   },
   {
-    "revision": "1daddda25f44950d41a411ae256cdd67",
+    "revision": "95f90f04941c1292afd714eac931f2d3",
     "url": "/oak-bike-client/index.html"
   }
 ];
