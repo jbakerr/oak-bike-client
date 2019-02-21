@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/oak-bike-client/static/js/2.7c01505a.chunk.js"
   },
   {
-    "revision": "f96d1c9bf8d3cf063f7274354f277b06",
+    "revision": "840457333814dc00b95ec076a1580af3",
     "url": "/oak-bike-client/index.html"
   }
 ];
