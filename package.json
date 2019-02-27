@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://traviseden.github.io/oak-bike-client",
   "dependencies": {
+    "aws-s3": "^2.0.2",
     "express": "^4.16.4",
     "gh-pages": "^2.0.1",
     "leaflet": "^1.4.0",
