@@ -2,25 +2,33 @@ import React from "react";
 import Dropzone from "react-dropzone";
 import { LOCATION } from "../../constants/report";
 
-// import { fakeImageUpload } from "../../utils/report";
-
-// import s3 from "aws-sdk/clients/s3";
-import S3 from "aws-s3";
-const s3Config = {
-  bucketName: "oak-bike",
-  region: "us-west-1",
+const makeid = () => {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < 24; i += 1) text += possible.charAt(Math.floor(Math.random() * 62));
+  return text;
 };
-const s3Client = new S3(s3Config);
+
+const bucketUrl = 'https://s3-us-west-1.amazonaws.com/oak-bike/';
 
 const Upload = ({ setUpload, setStatus }) => {
   const onDrop = async (files) => {
     const file = files[0];
-    await s3Client.uploadFile(file)
-      .then(data => { console.log("data:", data); })
-      .catch(err => { console.log("err:", err); });
-    console.log("this");
-    setUpload(files[0]);
-    setStatus(LOCATION);
+    const fileName = `${makeid()}.${file.type.split('/')[1]}`
+    const formData = new FormData();
+    formData.append('key', fileName);
+    formData.append('file', file);
+    fetch(bucketUrl, {
+      method: "POST",
+      body: formData,
+    }).then(response => {
+      console.log("response:", response);
+      const url = `${bucketUrl}${fileName}`;
+      setUpload(url);
+      setStatus(LOCATION);
+    }).catch(err => {
+      console.error("ERROR:", err);
+    });    
   }
 
   return (

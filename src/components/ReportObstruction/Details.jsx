@@ -5,7 +5,7 @@ import React from "react";
 const Details = ({upload, location}) => {
   return (
     <>
-      <p>upload: {upload.name} ({upload.size} bytes)</p>
+      <p>upload: {upload}</p>
       <p>location: [{location.lat}, {location.lng}]</p>
       <p>details...</p>
     </>
