@@ -1,13 +1,10 @@
 import {
   SET_REPORT_STATUS,
   SET_REPORT_IMAGE,
-  SET_REPORT_LOCATION_SHARED,
-  SET_REPORT_LOCATION_FETCHING,
-  SET_REPORT_LOCATION_COORDS,
-  SET_REPORT_LOCATION_METHOD,
-  SET_REPORT_DETAIL,
-  GET_LOCATION_COORDS,
-  HANDLE_REPORT_IMAGE_UPLOAD,
+  SET_REPORT_COORDS,
+  GET_USER_LOCATION,
+  HANDLE_IMAGE_UPLOAD,
+  HANDLE_REPORT_UPLOAD,
 } from "../../constants/actionsNames";
 
 export const setReportStatus = (status) => ({
@@ -20,39 +17,21 @@ export const setReportImage = (image) => ({
   payload: image,
 });
 
-export const setReportLocationShared = (shared) => ({
-  type: SET_REPORT_LOCATION_SHARED,
-  payload: shared,
-});
-
-export const setReportLocationFetching = (fetching) => ({
-  type: SET_REPORT_LOCATION_FETCHING,
-  payload: fetching,
-});
-
-export const setReportLocationCoords = (coords) => ({
-  type: SET_REPORT_LOCATION_COORDS,
+export const setReportCoords = (coords) => ({
+  type: SET_REPORT_COORDS,
   payload: coords,
 });
 
-export const setReportLocationMethod = (method) => ({
-  type: SET_REPORT_LOCATION_METHOD,
-  payload: method,
+export const getUserLocation = () => ({
+  type: GET_USER_LOCATION,
 });
 
-export const setReportDetail = (key, value) => ({
-  type: SET_REPORT_DETAIL,
-  payload: {
-    key,
-    value,
-  },
-});
-
-export const getReportLocationCoords = () => ({
-  type: GET_LOCATION_COORDS,
-});
-
-export const handleReportImageUpload = (image) => ({
-  type: HANDLE_REPORT_IMAGE_UPLOAD,
+export const handleImageUpload = (image) => ({
+  type: HANDLE_IMAGE_UPLOAD,
   payload: image,
+});
+
+export const handleReportUpload = (report) => ({
+  type: HANDLE_REPORT_UPLOAD,
+  payload: report,
 });

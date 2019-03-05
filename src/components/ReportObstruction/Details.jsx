@@ -1,13 +1,11 @@
 import React from "react";
 
-// import { SUBMISSION } from "../../constants/report";
-
-const Details = ({upload, location}) => {
+const Details = ({ image, coords, uploadReport }) => {
   return (
     <>
-      <p>upload: {upload}</p>
-      <p>location: [{location.lat}, {location.lng}]</p>
-      <p>details...</p>
+      <p>image: {image}</p>
+      <p>coords: [{coords.lat}, {coords.lng}]</p>
+      <p><button onClick={() => uploadReport()}>upload report</button></p>
     </>
   );
 };

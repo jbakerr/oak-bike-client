@@ -1,66 +1,57 @@
 import { put, call, select, takeLatest } from "redux-saga/effects";
-
 import {
-  LOCATION,
-  DETAILS,
-  USE_MY_LOCATION,
-} from "../../constants/report";
-
-import {
-  GET_LOCATION_COORDS,
-  HANDLE_REPORT_IMAGE_UPLOAD,
+  GET_USER_LOCATION,
+  HANDLE_IMAGE_UPLOAD,
+  HANDLE_REPORT_UPLOAD,
 } from "../../constants/actionsNames";
-
-import { selectReportLocationMethod } from "./selectors";
-
 import {
   setReportImage,
-  setReportStatus,
-  setReportLocationShared,
-  setReportLocationFetching,
-  setReportLocationCoords,
+  setReportCoords,
 } from "./actions";
-
 import {
   getUserLocation,
-  fakeImageUpload,
+  doUploadImage,
+  doUploadReport,
 } from "./effects";
 
-function* getLocationCoords() {
-  yield put(setReportLocationFetching(true));
-
+function* handleGetUserLocation() {
   try {
     const position = yield call(getUserLocation);
-    yield put(setReportLocationCoords({
+    yield put(setReportCoords({
       lat: position.coords.latitude,
       lng: position.coords.longitude,
     }));
-    yield put(setReportLocationShared(true));
-
-    const method = yield select(selectReportLocationMethod);
-    if (method === USE_MY_LOCATION) {
-      yield put(setReportStatus(DETAILS));
-    }
   } catch (error) {
+    // todo: error handling
     console.error(`ERROR: ${error.message}`)
   }
-
-  yield put(setReportLocationFetching(false));
 }
 
-function* handleImageUpload(image) {
+function* handleImageUpload(action) {
   try {
-    const upload = yield call(fakeImageUpload, image);
-    yield put(setReportImage(upload));
-    yield put(setReportStatus(LOCATION));
+    const result = yield call(doUploadImage, action.payload);
+    yield put(setReportImage(result));
   } catch (error) {
+    // todo: error handling
+    console.error(`ERROR: ${error.message}`)
+  }
+}
+
+function* handleReportUpload(action) {
+  try {
+    const result = yield call(doUploadReport, action.payload);
+    // todo: what to do after upload?
+    console.log("REPORT UPLOADED\n\n", action.payload, "\n\n", result);
+  } catch (error) {
+    // todo: error handling
     console.error(`ERROR: ${error.message}`)
   }
 }
 
 function* reportSagas() {
-  yield takeLatest(GET_LOCATION_COORDS, getLocationCoords);
-  yield takeLatest(HANDLE_REPORT_IMAGE_UPLOAD, handleImageUpload);
+  yield takeLatest(GET_USER_LOCATION, handleGetUserLocation);
+  yield takeLatest(HANDLE_IMAGE_UPLOAD, handleImageUpload);
+  yield takeLatest(HANDLE_REPORT_UPLOAD, handleReportUpload);
 }
 
 export default reportSagas;

@@ -1,61 +1,32 @@
-import React, { useState } from "react";
-
+import { connect } from 'react-redux';
 import {
-  UPLOAD,
-  LOCATION,
-  DETAILS,
-  SUBMISSION,
-  COMPLETE,
-  coordsOakland,
-  // initDetails,
-} from "../../constants/report";
+  selectReportStatus,
+  selectReportImage,
+  selectReportCoords,
+} from '../../redux/report/selectors';
+import {
+  setReportStatus,
+  setReportCoords,
+  getUserLocation,
+  handleImageUpload,
+  handleReportUpload,
+} from '../../redux/report/actions';
+import ReportObstructionUI from './ui';
 
-import Upload from "./Upload";
-import Location from "./Location";
-import Details from "./Details";
+const mapState = (state) => ({
+  status: selectReportStatus(state),
+  image: selectReportImage(state),
+  coords: selectReportCoords(state),
+});
 
-const ReportObstruction = () => {
-  const [status, setStatus] = useState(UPLOAD);
-  const [upload, setUpload] = useState({});
-  const [location, setLocation] = useState(coordsOakland);
-  // const [details, setDetails] = useState(initDetails);
-  // const updateDetail = ([key, val]) => setDetails({ ...details, [key]: val });
+const mapDispatch = (dispatch) => ({
+  setStatus: (status) => dispatch(setReportStatus(status)),
+  setCoords: (coords) => dispatch(setReportCoords(coords)),
+  getLocation: () => dispatch(getUserLocation()),
+  uploadImage: (image) => dispatch(handleImageUpload(image)),
+  uploadReport: (report) => dispatch(handleReportUpload(report)),  
+});
 
-  // const handleSubmit = () => {
-  //   console.log("submit!")
-  // }
-
-  switch(status) {
-    case UPLOAD:
-      return (
-        <Upload
-          setStatus={setStatus}
-          setUpload={setUpload}
-        />
-      );
-    case LOCATION:
-      return (
-        <Location
-          initCenter={coordsOakland}
-          initZoom={14}
-          setLocation={setLocation}
-          setStatus={setStatus}
-        />
-      );
-    case DETAILS:
-      return (
-        <Details
-          upload={upload}
-          location={location}
-        />
-      );
-    case SUBMISSION:
-      return (<p>...</p>);
-    case COMPLETE:
-      return (<p>...</p>);
-    default:
-      return null;    
-  }
-};
+const ReportObstruction = connect(mapState, mapDispatch)(ReportObstructionUI);
 
 export default ReportObstruction;

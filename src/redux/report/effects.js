@@ -1,5 +1,16 @@
+const bucketUrl = 'https://s3-us-west-1.amazonaws.com/oak-bike/';
+
+const gqlUrl = 'https://oakbike.herokuapp.com/gql';
+
+const makeid = () => {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < 24; i += 1) text += possible.charAt(Math.floor(Math.random() * 62));
+  return text;
+};
 
 export const getUserLocation = (options = {}) => new Promise((resolve, reject) => {
+  console.log("getUserLocation effect")
   navigator.geolocation.getCurrentPosition(
     location => resolve(location),
     error => reject(error),
@@ -7,13 +18,21 @@ export const getUserLocation = (options = {}) => new Promise((resolve, reject) =
   );
 });
 
-function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c === 'x' ? r : ((r & 0x3) | 0x8);
-    return v.toString(16);
-  });
-}
+export const doUploadImage = (image) => new Promise((resolve, reject) => {
+  const type = image.type.split('/')[1];
+  const fileName = `${makeid()}.${type}`
+  const formData = new FormData();
+  formData.append('key', fileName);
+  formData.append('file', image);
+  const options = { method: "POST", body: formData };
+  fetch(bucketUrl, options)
+    .then(() => resolve(`${bucketUrl}${fileName}`))
+    .catch(error => reject(error));
+});
 
-export const fakeImageUpload = file => new Promise((resolve, reject) => {
-  setTimeout(() => resolve({ url: `${uuidv4()}.png` }), 1000);
+export const doUploadReport = (report) => new Promise((resolve, reject) => {
+  const options = { method: "POST", body: report };
+  fetch(gqlUrl, options)
+    .then(success => resolve(success))
+    .catch(error => reject(error));
 });
